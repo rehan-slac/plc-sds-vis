@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{a515a0e5-3dff-4c7b-bf4e-a5a5f38931ab}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+     // Motor axes
+    {attribute 'pytmc' := 'pv: VIS:MMS:X'}
+    {attribute 'TcLinkTo' := '.bLimitForwardEnable  := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-X (EL7037)^STM Status^Status^Digital input 1;
+                              .bLimitBackwardEnable := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-X (EL7037)^STM Status^Status^Digital input 2'}
+    M1 : DUT_MotionStage := (bPowerSelf:=TRUE, nEnableMode:=ENUM_StageEnableMode.DURING_MOTION);
+    fbVIS_X_Motor : FB_MotionStage;
+
+    {attribute 'pytmc' := 'pv: VIS:MMS:Y'}
+    {attribute 'TcLinkTo' := '.bLimitForwardEnable  := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-Y (EL7037)^STM Status^Status^Digital input 1;
+                              .bLimitBackwardEnable := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-Y (EL7037)^STM Status^Status^Digital input 2'}
+    M2 : DUT_MotionStage := (bPowerSelf:=TRUE, nEnableMode:=ENUM_StageEnableMode.DURING_MOTION);
+    fbVIS_Y_Motor : FB_MotionStage;
+    {attribute 'pytmc' := 'pv: VIS:MMS:Z'}
+    {attribute 'TcLinkTo' := '.bLimitForwardEnable  := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-Z (EL7037)^STM Status^Status^Digital input 1;
+                              .bLimitBackwardEnable := TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^VIS-Z (EL7037)^STM Status^Status^Digital input 2'}
+    M3 : DUT_MotionStage :=(bPowerSelf:=TRUE,nEnableMode:=ENUM_StageEnableMode.DURING_MOTION);
+    fbVIS_Z_Motor : FB_MotionStage;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbVIS_X_Motor(stMotionStage:=M1);
+fbVIS_Y_Motor(stMotionStage:=M2);
+fbVIS_Z_Motor(stMotionStage:=M3);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
